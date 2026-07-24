@@ -1,0 +1,14 @@
+/* Step 6: CSS class "box" with specified properties */
+.box {
+    width: 300px;
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+/* Step 7: CSS style for <dt> element - font weight 500 */
+dt {
+    font-weight: 500;
+}

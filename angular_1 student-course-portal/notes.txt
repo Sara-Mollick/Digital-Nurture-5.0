@@ -1,0 +1,77 @@
+=========================================================
+  NOTES — Angular Project File Explanations (Task 1)
+=========================================================
+
+1. angular.json
+   - The Angular workspace configuration file.
+   - Defines project settings, build targets (build, serve, test), 
+     output paths, assets, styles, scripts, and budget thresholds.
+   - Under architect > build > configurations > production > budgets:
+     * maximumWarning: "500kB" — warns if initial bundle exceeds 500kB
+     * maximumError: "1MB" — fails the build if initial bundle exceeds 1MB
+     These control production bundle size limits to keep the app performant.
+
+2. tsconfig.json
+   - Root TypeScript configuration file.
+   - Sets compiler options like target (ES2022), module resolution, 
+     strict type-checking, and Angular-specific compiler options 
+     (strictTemplates, strictInjectionParameters).
+
+3. tsconfig.app.json
+   - Extends tsconfig.json specifically for the application build.
+   - Points to src/main.ts as the entry file and includes all .ts files under src/.
+
+4. package.json
+   - Node.js project manifest listing dependencies (@angular/core, @angular/router, rxjs, etc.),
+     devDependencies (@angular/cli, typescript), and npm scripts (start, build, test).
+
+5. src/main.ts
+   - The application entry point — the first file executed.
+   - In Angular 20 standalone mode, it calls bootstrapApplication(AppComponent, appConfig)
+     to initialize the app without a traditional NgModule.
+
+6. src/app/app.config.ts (standalone mode replacement for app.module.ts)
+   - Provides application-wide configuration including the router via provideRouter(routes).
+   - In Angular 20, this replaces the AppModule for registering providers.
+
+7. src/app/app.component.ts
+   - The root component of the application, bootstrapped by main.ts.
+   - Uses the @Component decorator with selector 'app-root', templateUrl, and styleUrls.
+   - The template contains <app-header> and <router-outlet> to render the header 
+     and routed page components.
+
+8. src/index.html
+   - The single HTML page that hosts the entire Angular SPA.
+   - Contains <app-root></app-root> where the root component is rendered.
+   - Includes <base href="/"> which is essential for Angular's router to work correctly.
+
+=========================================================
+  ng build — Generated Files in dist/ Folder
+=========================================================
+
+After running `ng build`, the dist/student-course-portal/ folder contains:
+- index.html       — The compiled single page with script tags injected
+- main-[hash].js   — The compiled application code (all components, services, etc.)
+- polyfills-[hash].js — Browser polyfills (zone.js, etc.)
+- styles-[hash].css — Compiled global styles
+- 3rdpartylicenses.txt — Third-party license attributions
+
+The [hash] suffix ensures cache-busting when files change between deployments.
+
+=========================================================
+  angular.json Budgets (Task 1, Step 5)
+=========================================================
+
+Located at: architect > build > configurations > production > budgets
+
+Budget Type: "initial"
+  - maximumWarning: "500kB" — If the initial JS bundle exceeds 500kB, 
+    ng build emits a WARNING but still completes.
+  - maximumError: "1MB" — If the initial JS bundle exceeds 1MB, 
+    ng build FAILS with an error, preventing oversized production bundles.
+
+Budget Type: "anyComponentStyle"
+  - maximumWarning: "2kB" — Warns if any single component CSS exceeds 2kB.
+  - maximumError: "4kB" — Fails if any single component CSS exceeds 4kB.
+
+These thresholds help maintain application performance by enforcing size limits.
